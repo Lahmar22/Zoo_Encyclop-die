@@ -50,14 +50,31 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             <!-- Animal Card Example 1 -->
             <?php while($row = $result->fetch_assoc()){ ?>
+
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                    <img src="<?= $row["image"] ?>" alt="<?= $row["image"] ?>" class="w-full h-48 object-cover">
+                    <img src="<?= $row["image"] ?>" alt="<?= $row["nom"] ?>" class="w-full h-48 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-2"><?= $row["nom"] ?></h3>
                         <p class="text-gray-600 mb-4"><?= $row["type_alimentaire"] ?></p>
                         
+
+                        <div class="flex gap-3 justify-center items-center">
+                            <form action="delete.php" method="POST">
+                                <input type="hidden" name="id_animal" value="<?= $row["id_animal"] ?>">
+                                <button class="block w-full bg-red-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="submit">DELETE</button>
+                            </form>
+                            <button class="block w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="button" data-bs-toggle="modal" data-bs-target="#updateAnimalModal"
+                                data-id="<?= $row['id_animal'] ?>"
+                                data-nom="<?= $row['nom'] ?>"
+                                data-espece="<?= $row['espece'] ?>"
+                                data-age="<?= $row['age'] ?>"
+                                data-habitat="<?= $row['habitat'] ?>" >
+                                UPDATE
+                            </button>
+                        </div>
                         
                     </div>
+                    
                 </div>
             <?php } ?>
 
@@ -128,6 +145,48 @@
         </div>
     </div>
 </div> 
+
+<div class="modal fade" id="updateAnimalModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Animal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form action="update.php" method="POST">
+
+          <input type="hidden" name="id" id="animal_id">
+
+          <div class="mb-3">
+            <label>Name</label>
+            <input type="text" name="nom" id="animal_nom" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Species</label>
+            <input type="text" name="espece" id="animal_espece" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Age</label>
+            <input type="number" name="age" id="animal_age" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Habitat</label>
+            <input type="text" name="habitat" id="animal_habitat" class="form-control" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Save changes</button>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 </body>
