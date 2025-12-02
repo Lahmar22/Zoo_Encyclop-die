@@ -98,41 +98,54 @@
 
    
     <!-- modal add  -->
-    <div id="addAnimal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="addAnimal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white border border-default rounded-base shadow-sm p-4 md:p-6">
             <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
-                <h3 class="text-lg font-medium text-heading">
-                    Create new product
-                </h3>
                 <button type="button" class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center" data-modal-hide="addAnimal">
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/></svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
             <form action="ajouter.php" method="POST">
-                <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+                <div class="space-y-4">
                     <div class="col-span-2">
                         <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
-                        <input type="text" name="name" id="name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Type product name" required="">
+                        <input type="text" name="name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" required="">
                     </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-                        <input type="number" name="price" id="price" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="$2999" required="">
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="category" class="block mb-2.5 text-sm font-medium text-heading">Category</label>
-                        <select id="category" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body">
-                            <option selected="">Select category</option>
-                            <option value="TV">TV/Monitors</option>
-                            <option value="PC">PC</option>
-                            <option value="GA">Gaming/Console</option>
-                            <option value="PH">Phones</option>
+                    <div>
+                    <label for="type_alimentaire" class="block text-sm font-medium text-gray-700 mb-2">Type Alimentaire</label>
+                    <select 
+                        name="type_alimentaire" 
+                        id="type_alimentaire"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Select type alimentaire</option>
+                        <option value="carnivore">Carnivore</option>
+                        <option value="herbivore">Herbivore</option>
+                        <option value="omnivore">Omnivore</option>
                         </select>
                     </div>
                     <div class="col-span-2">
-                        <label for="description" class="block mb-2.5 text-sm font-medium text-heading">Product Description</label>
-                        <textarea id="description" rows="4" class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body" placeholder="Write product description here"></textarea>                    
+                        <label for="image" class="block mb-2.5 text-sm font-medium text-heading">Image</label>
+                        <input 
+                        type="file" 
+                        name="image" 
+                        accept="image/*"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer" 
+                        required>
+                    </div>
+                    <div>
+                        <label for="habitat" class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
+                        <select 
+                        name="habitat" 
+                        id="habitat"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Select a habitat</option>
+                        <option value="1">Savane</option>
+                        <option value="2">Jungle</option>
+                        <option value="3">Désert</option>
+                        <option value="4">Océan</option>
+                        </select>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
