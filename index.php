@@ -1,5 +1,11 @@
 <?php
+    require "connection.php"; 
 
+    $sql = "SELECT * FROM  animal ";
+
+    $result = $conn->query($sql);
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -43,55 +49,18 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             <!-- Animal Card Example 1 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" alt="Leo the Lion" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Leo the Lion</h3>
-                    <p class="text-gray-600 mb-4">A majestic lion known for his golden mane and powerful roar. Leo is the king of the savanna.</p>
-                    <div class="flex gap-3">
-                        <a href="?action=edit&id=1" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
-                            Modify
-                        </a>
-                        <a href="?action=delete&id=1" onclick="return confirm('Are you sure you want to remove this animal?')" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
-                            Remove
-                        </a>
+            <?php while($row = $result->fetch_assoc()){ ?>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                    <img src="<?= $row["image"] ?>" alt="<?= $row["image"] ?>" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2"><?= $row["nom"] ?></h3>
+                        <p class="text-gray-600 mb-4"><?= $row["type_alimentaire"] ?></p>
+                        
+                        
                     </div>
                 </div>
-            </div>
+            <?php } ?>
 
-            <!-- Animal Card Example 2 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=400" alt="Bella the Elephant" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Bella the Elephant</h3>
-                    <p class="text-gray-600 mb-4">A gentle giant with a caring heart. Bella loves playing in the water and taking care of her herd.</p>
-                    <div class="flex gap-3">
-                        <a href="?action=edit&id=2" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
-                            Modify
-                        </a>
-                        <a href="?action=delete&id=2" onclick="return confirm('Are you sure you want to remove this animal?')" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
-                            Remove
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Animal Card Example 3 -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                <img src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=400" alt="Max the Penguin" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Max the Penguin</h3>
-                    <p class="text-gray-600 mb-4">An adorable penguin who loves to slide on ice and catch fish. Max is always cheerful.</p>
-                    <div class="flex gap-3">
-                        <a href="?action=edit&id=3" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
-                            Modify
-                        </a>
-                        <a href="?action=delete&id=3" onclick="return confirm('Are you sure you want to remove this animal?')" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
-                            Remove
-                        </a>
-                    </div>
-                </div>
-            </div>
             
         </div>
     </main>
@@ -120,9 +89,9 @@
                         id="type_alimentaire"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         <option value="">Select type alimentaire</option>
-                        <option value="carnivore">Carnivore</option>
-                        <option value="herbivore">Herbivore</option>
-                        <option value="omnivore">Omnivore</option>
+                        <option value="carnivore">🥩 Carnivore</option>
+                        <option value="herbivore">🥦 Herbivore</option>
+                        <option value="omnivore">🥘 Omnivore</option>
                         </select>
                     </div>
                     <div class="col-span-2">
@@ -141,10 +110,10 @@
                         id="habitat"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         <option value="">Select a habitat</option>
-                        <option value="1">Savane</option>
-                        <option value="2">Jungle</option>
-                        <option value="3">Désert</option>
-                        <option value="4">Océan</option>
+                        <option value="1">🪾 Savane</option>
+                        <option value="2">🌳 Jungle</option>
+                        <option value="3">🏜️ Désert</option>
+                        <option value="4">🌊 Océan</option>
                         </select>
                     </div>
                 </div>
