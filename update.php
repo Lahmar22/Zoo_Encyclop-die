@@ -1,8 +1,7 @@
 <?php
     require "connection.php";
 
-    $id= $_POST["id_animal"];
-    
+    $id= $_POST["animal_id"];
     $nom= $_POST["name"];
     $type_alimentaire= $_POST["type_alimentaire"];
     $image= $_POST["image"];

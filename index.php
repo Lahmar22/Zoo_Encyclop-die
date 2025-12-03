@@ -63,13 +63,13 @@
                                 <input type="hidden" name="id_animal" value="<?= $row["id_animal"] ?>">
                                 <button class="block w-full bg-red-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="submit">DELETE</button>
                             </form>
-                            <button class="block w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="button" data-bs-toggle="modal" data-bs-target="#updateAnimalModal"
-                                data-id="<?= $row['id_animal'] ?>"
+                            <button class="block w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="button" onclick="openUpdateModal(this)"
+                                data-id-animal="<?= $row['id_animal'] ?>"
                                 data-nom="<?= $row['nom'] ?>"
-                                data-espece="<?= $row['espece'] ?>"
-                                data-age="<?= $row['age'] ?>"
-                                data-habitat="<?= $row['habitat'] ?>" >
-                                UPDATE
+                                data-type-alimentaire="<?= $row['type_alimentaire'] ?>"
+                                data-id-habitat="<?= $row['id_habitat'] ?>"
+                            >
+                            UPDATE
                             </button>
                         </div>
                         
@@ -102,8 +102,7 @@
                     <div>
                     <label for="type_alimentaire" class="block text-sm font-medium text-gray-700 mb-2">Type Alimentaire</label>
                     <select 
-                        name="type_alimentaire" 
-                        id="type_alimentaire"
+                        name="type_alimentaire"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         <option value="">Select type alimentaire</option>
                         <option value="carnivore">🥩 Carnivore</option>
@@ -117,14 +116,14 @@
                         type="file" 
                         name="image" 
                         accept="image/*"
+                        id="animal_image"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer" 
                         required>
                     </div>
                     <div>
                         <label for="habitat" class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
                         <select 
-                        name="habitat" 
-                        id="habitat"
+                        name="habitat"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
                         <option value="">Select a habitat</option>
                         <option value="1">🪾 Savane</option>
@@ -146,48 +145,88 @@
     </div>
 </div> 
 
-<div class="modal fade" id="updateAnimalModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Update Animal</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+<!-- modal update -->
 
-      <div class="modal-body">
-        <form action="update.php" method="POST">
+    <div class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50" id="updateAnimalModal">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative">
 
-          <input type="hidden" name="id" id="animal_id">
+    
+    <button onclick="closeUpdateModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl">
+      ✖
+    </button>
 
-          <div class="mb-3">
-            <label>Name</label>
-            <input type="text" name="nom" id="animal_nom" class="form-control" required>
-          </div>
-
-          <div class="mb-3">
-            <label>Species</label>
-            <input type="text" name="espece" id="animal_espece" class="form-control" required>
-          </div>
-
-          <div class="mb-3">
-            <label>Age</label>
-            <input type="number" name="age" id="animal_age" class="form-control" required>
-          </div>
-
-          <div class="mb-3">
-            <label>Habitat</label>
-            <input type="text" name="habitat" id="animal_habitat" class="form-control" required>
-          </div>
-
-          <button type="submit" class="btn btn-primary w-100">Save changes</button>
-
-        </form>
-      </div>
-
-    </div>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Update Animal</h3>
+            <form action="update.php" method="POST">
+                <div class="space-y-4">
+                    <input type="hidden" name="animal_id" id="animal_id">
+                    <div class="col-span-2">
+                        <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
+                        <input type="text" name="name" id="animal_nom" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" required="">
+                    </div>
+                    <div>
+                    <label for="type_alimentaire" class="block text-sm font-medium text-gray-700 mb-2">Type Alimentaire</label>
+                    <select 
+                        name="type_alimentaire" 
+                        id="animal_type"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Select type alimentaire</option>
+                        <option value="carnivore">🥩 Carnivore</option>
+                        <option value="herbivore">🥦 Herbivore</option>
+                        <option value="omnivore">🥘 Omnivore</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label for="image" class="block mb-2.5 text-sm font-medium text-heading">Image</label>
+                        <input 
+                        type="file" 
+                        name="image" 
+                        accept="image/*"
+                        id="animal_image"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer" 
+                        required>
+                    </div>
+                    <div>
+                        <label for="habitat" class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
+                        <select 
+                        name="habitat" 
+                        id="animal_habitat"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Select a habitat</option>
+                        <option value="1">🪾 Savane</option>
+                        <option value="2">🌳 Jungle</option>
+                        <option value="3">🏜️ Désert</option>
+                        <option value="4">🌊 Océan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+                    <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition">
+                        Save changes
+                    </button>
+                    <button data-modal-hide="addAnimal" type="button" class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Cancel</button>
+                </div>
+            </form>
   </div>
 </div>
+
+<script>
+    function openUpdateModal(button){
+        document.getElementById("animal_id").value = button.dataset.idAnimal;
+        document.getElementById("animal_nom").value = button.dataset.nom;
+        document.getElementById("animal_type").value = button.dataset.typeAlimentaire;
+        document.getElementById("animal_habitat").value = button.dataset.idHabitat;
+
+        document.getElementById("updateAnimalModal").classList.remove("hidden");
+    }
+
+    function closeUpdateModal(){
+        document.getElementById("updateAnimalModal").classList.add("hidden");
+    }
+
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
 
 </body>
 </html>
