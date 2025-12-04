@@ -2,7 +2,7 @@
     require "connection.php"; 
 
     $total =0;
-    $sql = "SELECT * FROM  animal, habitats  WHERE animal.id_habitat =  habitats.id_habitat ";
+    $sql = "SELECT * FROM  animal, habitats  WHERE animal.id_habitat =  habitats.id_habitat ORDER BY id_animal";
 
     $result = $conn->query($sql);
 
