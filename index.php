@@ -2,7 +2,6 @@
     require "connection.php"; 
 
     $total =0;
-
     $sql = "SELECT * FROM  animal, habitats  WHERE animal.id_habitat =  habitats.id_habitat ";
 
     $result = $conn->query($sql);
@@ -26,9 +25,12 @@
 
     $total = $omnivore_count + $carnivore_count + $herbivore_count;
 
+   if($total != 0){
     $omnivore_percentage = ($omnivore_count / $total) * 100 ;
     $carnivore_percentage = ($carnivore_count / $total) * 100 ;
     $herbivore_percentage = ($herbivore_count / $total) * 100 ;
+   }
+
     
 ?>
 
@@ -150,11 +152,11 @@
             <!-- Animal Card Example 1 -->
             <?php 
                 if( $result2 && $result2->num_rows > 0){
-                    while($row1 = $result2->fetch_assoc()){ ?>
+                    while($row1 = $result2->fetch_assoc()){  ?>
 
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                    <img src="<?= $row1["image"] ?>" alt="<?= $row1["nom"] ?>" class="w-full h-48 object-cover">
-                    <div class="p-6">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+                        <img src="<?= $row1["image"] ?>" alt="<?= $row1["nom"] ?>" class="w-full h-48 object-cover">
+                        <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-2"><?= $row1["nom"] ?></h3>
                         <p class="text-gray-600 mb-4">Type : <?= $row1["type_alimentaire"] ?></p>
                         <p class="text-gray-600 mb-4">Habitat : <?= $row1["nomHab"] ?></p>
@@ -168,6 +170,7 @@
                             <button class="block w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="button" onclick="openUpdateModal(this)"
                                 data-id-animal="<?= $row1['id_animal'] ?>"
                                 data-nom="<?= $row1['nom'] ?>"
+                                data-image="<?= $row1['image'] ?>"
                                 data-type-alimentaire="<?= $row1['type_alimentaire'] ?>"
                                 data-id-habitat="<?= $row1['id_habitat'] ?>"
                             >
@@ -198,6 +201,7 @@
                             <button class="block w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg text-center" type="button" onclick="openUpdateModal(this)"
                                 data-id-animal="<?= $row['id_animal'] ?>"
                                 data-nom="<?= $row['nom'] ?>"
+                                data-image="<?= $row['image'] ?>"
                                 data-type-alimentaire="<?= $row['type_alimentaire'] ?>"
                                 data-id-habitat="<?= $row['id_habitat'] ?>"
                             >
@@ -241,7 +245,7 @@
                         <div class="flex items-center justify-between text-sm mb-2">
                             <span class="text-gray-600">Percentage</span>
                             <span class="font-semibold text-red-600">
-                                <?php echo $carnivore_percentage ?? 0; ?>%
+                                <?php echo number_format($carnivore_percentage, 2, ',', ' ') ?? 0; ?>%
                             </span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2">
@@ -269,7 +273,7 @@
                         <div class="flex items-center justify-between text-sm mb-2">
                             <span class="text-gray-600">Percentage</span>
                             <span class="font-semibold text-green-600">
-                                <?php echo $herbivore_percentage ?? 0; ?>%
+                                <?php echo number_format($herbivore_percentage, 2, ',', ' ') ?? 0; ?>%
                             </span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2">
@@ -297,7 +301,7 @@
                         <div class="flex items-center justify-between text-sm mb-2">
                             <span class="text-gray-600">Percentage</span>
                             <span class="font-semibold text-orange-600">
-                                <?php echo $omnivore_percentage ?? 0; ?>%
+                                <?php echo number_format($omnivore_percentage, 2, ',', ' ') ?? 0; ?>%
                             </span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2">
@@ -376,12 +380,9 @@
                     <div class="col-span-2">
                         <label for="image" class="block mb-2.5 text-sm font-medium text-heading">Image</label>
                         <input 
-                        type="file" 
+                        type="text" 
                         name="image" 
-                        accept="image/*"
-                        id="animal_image"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer" 
-                        required>
+                        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" required="">
                     </div>
                     <div>
                         <label for="habitat" class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
@@ -440,13 +441,7 @@
                     </div>
                     <div class="col-span-2">
                         <label for="image" class="block mb-2.5 text-sm font-medium text-heading">Image</label>
-                        <input 
-                        type="file" 
-                        name="image" 
-                        accept="image/*"
-                        id="animal_image"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer" 
-                        required>
+                        <input type="text" name="image" id="animal_image" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" required="">
                     </div>
                     <div>
                         <label for="habitat" class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
@@ -496,6 +491,7 @@
     function openUpdateModal(button){
         document.getElementById("animal_id").value = button.dataset.idAnimal;
         document.getElementById("animal_nom").value = button.dataset.nom;
+        document.getElementById("animal_image").value = button.dataset.image;
         document.getElementById("animal_type").value = button.dataset.typeAlimentaire;
         document.getElementById("animal_habitat").value = button.dataset.idHabitat;
 
