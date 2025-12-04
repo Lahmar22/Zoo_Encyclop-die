@@ -81,6 +81,14 @@
             </button>
             
         </div>
+
+        <div class="p-6">
+            <a href="jeux.php"
+                class="flex w-full text-center  gap-2 px-5 py-2.5 text-lg font-semibold bg-green-600 text-white rounded-2xl shadow-md ">
+                🎮 Jeux
+            </a>
+        </div>
+
     </aside>
 
 
